@@ -26,10 +26,8 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.newsapp.DateFormat
 import com.newsapp.DateFormat.getTimeAgo
 import com.newsapp.R
@@ -103,10 +101,4 @@ fun InfoWithIcon(icon: ImageVector, info: String) {
         Text(text = info, maxLines = 1,
             overflow = TextOverflow.Ellipsis)
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DetailScreenPreview() {
-//    DetailScreen(rememberNavController())
 }

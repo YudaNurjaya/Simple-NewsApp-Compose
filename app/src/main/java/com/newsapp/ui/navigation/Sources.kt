@@ -30,6 +30,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
@@ -42,15 +43,15 @@ import com.newsapp.network.NewsManager
 @Composable
 fun Sources(newsManager: NewsManager) {
     val menuItems = listOf(
-        "ABC News" to "abc-news",
-        "TechCrunch" to "techcrunch",
-        "talkSPORT" to "talksport",
-        "Reuters" to "reuters",
-        "The Verge" to "the-verge"
+        "ABC News" to "ABC-NEWS",
+        "TechCrunch" to "TechCrunch",
+        "talkSPORT" to "TalkSport",
+        "Reuters" to "Reuters",
+        "The Verge" to "The-Verge"
     )
 
     Scaffold(topBar = {
-        TopAppBar(title = { Text(text = "${newsManager.sourceName.value} source") },
+        TopAppBar(title = { Text(text = newsManager.sourceName.value) },
             actions = {
                 var menuExpanded by remember {
                     mutableStateOf(false)
@@ -65,11 +66,9 @@ fun Sources(newsManager: NewsManager) {
                         onDismissRequest = { menuExpanded = false }) {
                         menuItems.forEach {
                             DropdownMenuItem(onClick = {
-                                // El segundo valor de "menuItems" se usa con la API
                                 newsManager.sourceName.value = it.second
                                 menuExpanded = false
                             }) {
-                                // Asignamos el primer valor de la lista "menuItems"
                                 Text(text = it.first)
                             }
                         }
@@ -98,10 +97,10 @@ fun SourceContent(articles: List<Article>) {
                 withStyle(style = SpanStyle(color = colorResource(id = R.color.blue_sky),
                     textDecoration = TextDecoration.Underline)
                 ) {
-                    append("Read full article")
+                    append("Read Full Article")
                 }
             }
-            Card(backgroundColor = colorResource(id = R.color.blue_sky),
+            Card(backgroundColor = colorResource(id = R.color.teal_700),
                 elevation = 6.dp, modifier = Modifier.padding(8.dp)
             ) {
                 Column(modifier = Modifier
@@ -111,7 +110,7 @@ fun SourceContent(articles: List<Article>) {
 
                     Text(text = article.title!!,
                         fontWeight = FontWeight.Bold,
-                        color = colorResource(id = R.color.yellow),
+                        color = colorResource(id = R.color.black),
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -127,7 +126,6 @@ fun SourceContent(articles: List<Article>) {
                                 annotatedString.getStringAnnotations(it, it).firstOrNull()?.let {
                                         result ->
                                     if (result.tag == "URL") {
-                                        // Open the URL in browser
                                         uriHandler.openUri(result.item)
                                     }
                                 }

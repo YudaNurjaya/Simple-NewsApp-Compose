@@ -51,8 +51,8 @@ fun Categories(onFetchCategory: (String) -> Unit = {}, newsManager: NewsManager)
 @Composable
 fun CategoryTab(category: String, isSelected: Boolean = false, onFetchCategory: (String)-> Unit) {
     val background = if (isSelected)
-        colorResource(id = R.color.blue_bg)
-    else colorResource(id = R.color.blue_sky)
+        colorResource(id = R.color.purple_200)
+    else colorResource(id = R.color.purple_700)
 
     Surface(modifier = Modifier
         .padding(horizontal = 4.dp, vertical = 15.dp)

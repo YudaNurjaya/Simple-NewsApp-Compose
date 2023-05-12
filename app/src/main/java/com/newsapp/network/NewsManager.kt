@@ -7,21 +7,21 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.newsapp.models.ArticleCategory
-import com.newsapp.models.TopNewsResponse
+import com.newsapp.models.NewsResponse
 import com.newsapp.models.getArticleCategory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class NewsManager {
-    private val _newsResponse = mutableStateOf(TopNewsResponse())
-    val newsResponse: State<TopNewsResponse>
+    private val _newsResponse = mutableStateOf(NewsResponse())
+    val newsResponse: State<NewsResponse>
         @Composable get() = remember {
             _newsResponse
         }
 
-    private val _responseCategories = mutableStateOf(TopNewsResponse())
-    val responseCategories: MutableState<TopNewsResponse>
+    private val _responseCategories = mutableStateOf(NewsResponse())
+    val responseCategories: MutableState<NewsResponse>
         @Composable get() = remember {
             _responseCategories
         }
@@ -29,8 +29,8 @@ class NewsManager {
     val selectedCategory: MutableState<ArticleCategory?> = mutableStateOf(null)
 
     val sourceName = mutableStateOf("abc-news")
-    private val _responseSources = mutableStateOf(TopNewsResponse())
-    val responseSources: MutableState<TopNewsResponse>
+    private val _responseSources = mutableStateOf(NewsResponse())
+    val responseSources: MutableState<NewsResponse>
         @Composable get() = remember {
             _responseSources
         }
@@ -41,10 +41,10 @@ class NewsManager {
 
     private fun getArticles() {
         val service = ApiClient.retrofitService.getNewsTopHeadlines("us")
-        service.enqueue(object : Callback<TopNewsResponse> {
+        service.enqueue(object : Callback<NewsResponse> {
 
-            override fun onResponse(call: Call<TopNewsResponse>, response:
-            Response<TopNewsResponse>
+            override fun onResponse(call: Call<NewsResponse>, response:
+            Response<NewsResponse>
             ) {
                 if (response.isSuccessful) {
                     _newsResponse.value = response.body()!!
@@ -55,7 +55,7 @@ class NewsManager {
                 }
             }
 
-            override fun onFailure(call: Call<TopNewsResponse>, t: Throwable) {
+            override fun onFailure(call: Call<NewsResponse>, t: Throwable) {
                 Log.e("GetArticles Error:", "${t.printStackTrace()}")
             }
         })
@@ -68,10 +68,10 @@ class NewsManager {
 
     fun getArticlesByCategory(category: String) {
         val service = ApiClient.retrofitService.getArticlesByCategory(category)
-        service.enqueue(object : Callback<TopNewsResponse> {
+        service.enqueue(object : Callback<NewsResponse> {
 
-            override fun onResponse(call: Call<TopNewsResponse>, response:
-            Response<TopNewsResponse>
+            override fun onResponse(call: Call<NewsResponse>, response:
+            Response<NewsResponse>
             ) {
                 if (response.isSuccessful) {
                     _responseCategories.value = response.body()!!
@@ -82,7 +82,7 @@ class NewsManager {
                 }
             }
 
-            override fun onFailure(call: Call<TopNewsResponse>, t: Throwable) {
+            override fun onFailure(call: Call<NewsResponse>, t: Throwable) {
                 Log.e("ArticlesCategory Error:", "${t.printStackTrace()}")
             }
         })
@@ -90,10 +90,10 @@ class NewsManager {
 
     fun getArticlesBySources() {
         val service = ApiClient.retrofitService.getArticlesBySource(sourceName.value)
-        service.enqueue(object : Callback<TopNewsResponse> {
+        service.enqueue(object : Callback<NewsResponse> {
 
-            override fun onResponse(call: Call<TopNewsResponse>, response:
-            Response<TopNewsResponse>
+            override fun onResponse(call: Call<NewsResponse>, response:
+            Response<NewsResponse>
             ) {
                 if (response.isSuccessful) {
                     _responseSources.value = response.body()!!
@@ -104,7 +104,7 @@ class NewsManager {
                 }
             }
 
-            override fun onFailure(call: Call<TopNewsResponse>, t: Throwable) {
+            override fun onFailure(call: Call<NewsResponse>, t: Throwable) {
                 Log.e("ArtSources Error:", "${t.printStackTrace()}")
             }
         })
